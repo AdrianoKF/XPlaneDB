@@ -1,6 +1,6 @@
 package de.rumpold.xplanedb;
 
-import de.rumpold.xplanedb.exceptions.ParseException;
+import de.rumpold.xplanedb.parser.exceptions.ParseException;
 import de.rumpold.xplanedb.parser.NavDbParser;
 
 /**

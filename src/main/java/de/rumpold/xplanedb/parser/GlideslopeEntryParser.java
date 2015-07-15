@@ -1,12 +1,9 @@
 package de.rumpold.xplanedb.parser;
 
-import de.rumpold.xplanedb.exceptions.ParseException;
 import de.rumpold.xplanedb.model.GlideslopeEntry;
 import de.rumpold.xplanedb.model.NavEntry;
 import de.rumpold.xplanedb.model.NavEntry.NavEntryType;
-
-import java.util.NoSuchElementException;
-import java.util.StringTokenizer;
+import de.rumpold.xplanedb.parser.exceptions.ParseException;
 
 /**
  * Created by Adriano on 14.07.2015.
@@ -18,28 +15,23 @@ public final class GlideslopeEntryParser extends NavEntryParser {
     }
 
     @Override
-    public NavEntry parseLine(String line) throws ParseException {
-        final StringTokenizer tokenizer = new StringTokenizer(line, " ");
+    protected int getFieldCount() {
+        return 11;
+    }
 
-        try {
-            final NavEntryType type = NavEntryType.fromValue(Integer.parseInt(tokenizer.nextToken()));
-            validateType(type);
-            final double latitude = Double.parseDouble(tokenizer.nextToken());
-            final double longitude = Double.parseDouble(tokenizer.nextToken());
-            final int elevation = Integer.parseInt(tokenizer.nextToken());
-            final int frequency = Integer.parseInt(tokenizer.nextToken());
-            final int range = Integer.parseInt(tokenizer.nextToken());
-            final double localizerBearing = Double.parseDouble(tokenizer.nextToken());
-            final String identifier = tokenizer.nextToken();
-            final String airportCode = tokenizer.nextToken();
-            final String runwayNumber = tokenizer.nextToken();
-            final String name = tokenizer.nextToken();
+    @Override
+    public NavEntry parseEntry(String[] fields) throws ParseException {
+        final double latitude = Double.parseDouble(fields[1]);
+        final double longitude = Double.parseDouble(fields[2]);
+        final int elevation = Integer.parseInt(fields[3]);
+        final int frequency = Integer.parseInt(fields[4]);
+        final int range = Integer.parseInt(fields[5]);
+        final double localizerBearing = Double.parseDouble(fields[6]);
+        final String identifier = fields[7];
+        final String airportCode = fields[8];
+        final String runwayNumber = fields[9];
+        final String name = concatNameFields(fields);
 
-            return new GlideslopeEntry(latitude, longitude, elevation, frequency, range, localizerBearing, identifier, airportCode, runwayNumber, name);
-        } catch (NumberFormatException e) {
-            throw new ParseException(getClass().getSimpleName() + " illegal numeric value in line: " + line, e);
-        } catch (NoSuchElementException e) {
-            throw new ParseException(getClass().getSimpleName() + " premature end of line: " + line, e);
-        }
+        return new GlideslopeEntry(latitude, longitude, elevation, frequency, range, localizerBearing, identifier, airportCode, runwayNumber, name);
     }
 }

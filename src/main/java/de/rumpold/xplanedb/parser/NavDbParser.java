@@ -1,8 +1,8 @@
 package de.rumpold.xplanedb.parser;
 
-import de.rumpold.xplanedb.exceptions.ParseException;
 import de.rumpold.xplanedb.model.NavEntry;
 import de.rumpold.xplanedb.model.NavEntry.NavEntryType;
+import de.rumpold.xplanedb.parser.exceptions.ParseException;
 
 import java.io.*;
 import java.util.Map;
@@ -58,7 +58,10 @@ public class NavDbParser {
                     final NavEntryParser parser = parsers.get(type);
                     if (parser != null) {
                         final NavEntry entry = parser.parseLine(line);
-                        System.out.println(entry);
+
+                        if (entry != null) {
+//                            System.out.println(entry);
+                        }
                     } else {
 //                        System.err.println("No parser for entry type " + type);
                     }
