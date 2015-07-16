@@ -2,14 +2,13 @@ package de.rumpold.xplanedb.parser;
 
 import de.rumpold.xplanedb.model.NavEntry;
 import de.rumpold.xplanedb.model.NavEntry.NavEntryType;
+import de.rumpold.xplanedb.model.NdbEntry;
 import de.rumpold.xplanedb.parser.exceptions.InvalidHeaderException;
 import de.rumpold.xplanedb.parser.exceptions.ParseException;
+import de.rumpold.xplanedb.parser.exceptions.PrematureEofException;
 
 import java.io.*;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.StringTokenizer;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Created by Adriano on 14.07.2015.
@@ -33,8 +32,9 @@ public class NavDbParser {
         registerParser(new GlideslopeEntryParser());
     }
 
-    public void parseFile(String navDb) throws ParseException {
+    public List<NavEntry> parseFile(String navDb) throws ParseException {
         final File dbFile = new File(navDb);
+        final List<NavEntry> result = new ArrayList<>();
 
         try {
             BufferedReader in = new BufferedReader(new FileReader(dbFile));
@@ -48,6 +48,10 @@ public class NavDbParser {
             line = in.readLine();
 
             for (line = in.readLine(); !NAV_DB_FOOTER.equals(line); line = in.readLine()) {
+                if (!in.ready()) {
+                    throw new PrematureEofException();
+                }
+
                 if (line.isEmpty()) {
                     continue;
                 }
@@ -61,7 +65,7 @@ public class NavDbParser {
                         final NavEntry entry = parser.parseLine(line);
 
                         if (entry != null) {
-//                            System.out.println(entry);
+                            result.add(entry);
                         }
                     } else {
 //                        System.err.println("No parser for entry type " + type);
@@ -70,6 +74,7 @@ public class NavDbParser {
                     throw new ParseException("Unexpected end of line while reading navigation database: " + line, e);
                 }
             }
+            return result;
         } catch (FileNotFoundException e) {
             throw new ParseException("Cannot open navigation database for reading: " + navDb, e);
         } catch (IOException e) {
