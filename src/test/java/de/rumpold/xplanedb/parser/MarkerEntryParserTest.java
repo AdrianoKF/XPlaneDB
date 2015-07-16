@@ -4,6 +4,7 @@ import de.rumpold.xplanedb.model.MarkerEntry;
 import de.rumpold.xplanedb.model.MarkerEntry.MarkerType;
 import de.rumpold.xplanedb.model.NavEntry;
 import de.rumpold.xplanedb.model.NavEntry.NavEntryType;
+import de.rumpold.xplanedb.parser.exceptions.InvalidDummyValueException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -76,5 +77,26 @@ public class MarkerEntryParserTest {
         assertEquals("KSEA", entry.getAirportCode());
         assertEquals("16R", entry.getRunwayNumber());
         assertEquals("IM", entry.getName());
+    }
+
+    @Test
+    public void testParseLineInvalidDummyValue1() throws Exception {
+        final String invalidLine = "7  47.46617200 -122.31783880    433     1   0     180.336 ---- KSEA 16R IM";
+        rule.expect(InvalidDummyValueException.class);
+        parser.parseLine(invalidLine);
+    }
+
+    @Test
+    public void testParseLineInvalidDummyValue2() throws Exception {
+        final String invalidLine = "8  47.46617200 -122.31783880    433     0   1     180.336 ---- KSEA 16R IM";
+        rule.expect(InvalidDummyValueException.class);
+        parser.parseLine(invalidLine);
+    }
+
+    @Test
+    public void testParseLineInvalidIdentifier() throws Exception {
+        final String invalidLine = "9  47.46617200 -122.31783880    433     0   0     180.336 XXYY KSEA 16R IM";
+        rule.expect(InvalidDummyValueException.class);
+        parser.parseLine(invalidLine);
     }
 }

@@ -37,4 +37,14 @@ public final class MarkerEntry extends NavEntry {
         this.airportCode = airportCode;
         this.runwayNumber = runwayNumber;
     }
+
+    @Override
+    public String toString() {
+        return "MarkerEntry{" +
+                "markerType=" + markerType +
+                ", localizerBearing=" + localizerBearing +
+                ", airportCode='" + airportCode + '\'' +
+                ", runwayNumber='" + runwayNumber + '\'' +
+                "} " + super.toString();
+    }
 }

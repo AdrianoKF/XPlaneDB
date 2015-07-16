@@ -1,6 +1,7 @@
 package de.rumpold.xplanedb.parser;
 
 import de.rumpold.xplanedb.model.LocalizerEntry;
+import de.rumpold.xplanedb.model.LocalizerEntry.LocalizerType;
 import de.rumpold.xplanedb.model.NavEntry;
 import de.rumpold.xplanedb.model.NavEntry.NavEntryType;
 import de.rumpold.xplanedb.parser.exceptions.ParseException;
@@ -21,6 +22,16 @@ public final class LocalizerEntryParser extends NavEntryParser {
 
     @Override
     public NavEntry parseEntry(String[] fields) throws ParseException {
+        final NavEntryType entryType = NavEntryType.fromValue(Integer.parseInt(fields[0]));
+        final LocalizerType type;
+        if (entryType == NavEntryType.LOC) {
+            type = LocalizerType.STANDALONE;
+        } else if (entryType == NavEntryType.ILS_LOC) {
+            type = LocalizerType.ILS;
+        } else {
+            throw new ParseException("Unknown localizer type");
+        }
+
         final double latitude = Double.parseDouble(fields[1]);
         final double longitude = Double.parseDouble(fields[2]);
         final int elevation = Integer.parseInt(fields[3]);
@@ -32,6 +43,6 @@ public final class LocalizerEntryParser extends NavEntryParser {
         final String runwayNumber = fields[9];
         final String name = concatNameFields(fields);
 
-        return new LocalizerEntry(latitude, longitude, elevation, frequency, range, bearing, identifier, airportCode, runwayNumber, name);
+        return new LocalizerEntry(type, latitude, longitude, elevation, frequency, range, bearing, identifier, airportCode, runwayNumber, name);
     }
 }

@@ -35,7 +35,7 @@ public class LocalizerEntryParserTest {
     }
 
     @Test
-    public void testParseEntryValid() throws Exception {
+    public void testParseEntryValidIls() throws Exception {
         final String line = "4 47.42939200 -122.30805600 338 11030 18 180.343 ISNQ KSEA 16L ILS-cat-I";
         final LocalizerEntry entry = (LocalizerEntry) parser.parseLine(line);
 
@@ -49,6 +49,23 @@ public class LocalizerEntryParserTest {
         assertEquals("KSEA", entry.getAirportCode());
         assertEquals("16L", entry.getRunwayNumber());
         assertEquals("ILS-cat-I", entry.getName());
+    }
+
+    @Test
+    public void testParseEntryValidLoc() throws Exception {
+        final String line = "5  40.86688600 -074.28699400    176 10935  18     209.600 ICDW KCDW 22  LOC";
+        final LocalizerEntry entry = (LocalizerEntry) parser.parseLine(line);
+
+        assertEquals(40.866886, entry.getLatitude(), 1e-6);
+        assertEquals(-74.286994, entry.getLongitude(), 1e-6);
+        assertEquals(176, entry.getElevation());
+        assertEquals(10935, entry.getFrequency());
+        assertEquals(18, entry.getRange());
+        assertEquals(209.600, entry.getBearing(), 1e-6);
+        assertEquals("ICDW", entry.getIdentifier());
+        assertEquals("KCDW", entry.getAirportCode());
+        assertEquals("22", entry.getRunwayNumber());
+        assertEquals("LOC", entry.getName());
     }
 
     @Test

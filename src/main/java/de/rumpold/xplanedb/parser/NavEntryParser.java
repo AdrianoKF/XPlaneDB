@@ -15,8 +15,12 @@ public abstract class NavEntryParser {
     public abstract NavEntryType[] getAcceptedTypes();
     protected abstract int getFieldCount();
 
+    protected String concatFields(String[] fields, int startIndex) {
+        return String.join(" ", Arrays.copyOfRange(fields, startIndex, fields.length));
+    }
+
     protected String concatNameFields(String[] fields) {
-        return String.join(" ", Arrays.copyOfRange(fields, getFieldCount() - 1, fields.length));
+        return concatFields(fields, getFieldCount() - 1);
     }
 
     protected abstract NavEntry parseEntry(String[] fields) throws ParseException, NumberFormatException;

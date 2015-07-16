@@ -38,8 +38,7 @@ public final class MarkerEntryParser extends NavEntryParser {
                 markerType = MarkerType.OUTER;
                 break;
             default:
-                markerType = null;
-                break;
+                throw new ParseException("Invalid marker type");
         }
 
         // Validate dummy fields
