@@ -30,6 +30,7 @@ public class NavDbParser {
         registerParser(new VorEntryParser());
         registerParser(new LocalizerEntryParser());
         registerParser(new GlideslopeEntryParser());
+        registerParser(new MarkerEntryParser());
     }
 
     public List<NavEntry> parseFile(String navDb) throws ParseException {

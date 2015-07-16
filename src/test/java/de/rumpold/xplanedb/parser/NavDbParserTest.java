@@ -32,7 +32,7 @@ public class NavDbParserTest {
         final String fileName = getClass().getClassLoader().getResource("nav_db.dat").getFile();
         final List<NavEntry> result = parser.parseFile(fileName);
 
-        assertEquals(4, result.size());
+        assertEquals(7, result.size());
     }
 
     @Test
