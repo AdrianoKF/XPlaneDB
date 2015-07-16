@@ -15,6 +15,18 @@ public final class NdbEntry extends NavEntry {
         this.identifier = identifier;
     }
 
+    public int getFrequency() {
+        return frequency;
+    }
+
+    public int getRange() {
+        return range;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
     @Override
     public String toString() {
         return "NdbEntry{" +

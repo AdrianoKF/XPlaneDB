@@ -22,6 +22,30 @@ public final class GlideslopeEntry extends NavEntry {
         this.runwayNumber = runwayNumber;
     }
 
+    public int getFrequency() {
+        return frequency;
+    }
+
+    public int getRange() {
+        return range;
+    }
+
+    public double getLocalizerBearing() {
+        return localizerBearing;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public String getAirportCode() {
+        return airportCode;
+    }
+
+    public String getRunwayNumber() {
+        return runwayNumber;
+    }
+
     @Override
     public String toString() {
         return "GlideslopeEntry{" +

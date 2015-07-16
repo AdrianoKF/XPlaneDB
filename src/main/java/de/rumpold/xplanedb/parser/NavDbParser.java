@@ -2,6 +2,7 @@ package de.rumpold.xplanedb.parser;
 
 import de.rumpold.xplanedb.model.NavEntry;
 import de.rumpold.xplanedb.model.NavEntry.NavEntryType;
+import de.rumpold.xplanedb.parser.exceptions.InvalidHeaderException;
 import de.rumpold.xplanedb.parser.exceptions.ParseException;
 
 import java.io.*;
@@ -40,7 +41,7 @@ public class NavDbParser {
 
             String line = in.readLine();
             if (!NAV_DB_HEADER.equals(line)) {
-                throw new ParseException("Unexpected file header: " + line);
+                throw new InvalidHeaderException("Invalid header magic value: " + line);
             }
 
             // Version information line, skip for now

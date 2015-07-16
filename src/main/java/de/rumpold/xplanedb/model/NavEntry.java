@@ -52,6 +52,22 @@ public abstract class NavEntry {
         this.name = name;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public int getElevation() {
+        return elevation;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
         return "NavEntry{" +

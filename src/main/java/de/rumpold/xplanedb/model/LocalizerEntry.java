@@ -22,6 +22,30 @@ public final class LocalizerEntry extends NavEntry {
         this.runwayNumber = runwayNumber;
     }
 
+    public String getRunwayNumber() {
+        return runwayNumber;
+    }
+
+    public int getFrequency() {
+        return frequency;
+    }
+
+    public int getRange() {
+        return range;
+    }
+
+    public double getBearing() {
+        return bearing;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public String getAirportCode() {
+        return airportCode;
+    }
+
     @Override
     public String toString() {
         return "LocalizerEntry{" +

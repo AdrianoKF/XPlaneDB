@@ -17,6 +17,22 @@ public final class VorEntry extends NavEntry {
         this.identifier = identifier;
     }
 
+    public int getFrequency() {
+        return frequency;
+    }
+
+    public int getRange() {
+        return range;
+    }
+
+    public double getVariation() {
+        return variation;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
     @Override
     public String toString() {
         return "VorEntry{" +

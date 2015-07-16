@@ -2,6 +2,7 @@ package de.rumpold.xplanedb.parser;
 
 import de.rumpold.xplanedb.model.NavEntry;
 import de.rumpold.xplanedb.model.NavEntry.NavEntryType;
+import de.rumpold.xplanedb.parser.exceptions.EntryTooShortException;
 import de.rumpold.xplanedb.parser.exceptions.InvalidDummyValueException;
 import de.rumpold.xplanedb.parser.exceptions.ParseException;
 
@@ -15,7 +16,7 @@ public abstract class NavEntryParser {
     protected abstract int getFieldCount();
 
     protected String concatNameFields(String[] fields) {
-        return String.join(" ", Arrays.copyOfRange(fields, getFieldCount() - 1, getFieldCount() + 1));
+        return String.join(" ", Arrays.copyOfRange(fields, getFieldCount() - 1, fields.length));
     }
 
     protected abstract NavEntry parseEntry(String[] fields) throws ParseException, NumberFormatException;
@@ -23,8 +24,7 @@ public abstract class NavEntryParser {
         try {
             final String[] fields = line.split("[ ]+");
             if (fields.length < getFieldCount()) {
-                System.err.printf("Invalid number of fields (got %d, expected %d) in line: %s%n", fields.length, getFieldCount(), line);
-                return null;
+                throw new EntryTooShortException();
             }
             final NavEntryType type = NavEntryType.fromValue(Integer.parseInt(fields[0]));
             validateType(type);
@@ -32,8 +32,9 @@ public abstract class NavEntryParser {
             return parseEntry(fields);
         } catch (NumberFormatException e) {
             throw new ParseException(getClass().getSimpleName() + " illegal numeric value in line: " + line, e);
-        } catch (InvalidDummyValueException e) {
-            throw new ParseException(getClass().getSimpleName() + " dummy value must be 0.0 in line: " + line);
+        } catch (ParseException e) {
+            System.err.println(e.getClass().getSimpleName() + " in line: " + line);
+            throw e;
         }
     }
 
