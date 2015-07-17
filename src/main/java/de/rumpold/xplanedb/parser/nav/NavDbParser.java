@@ -1,8 +1,7 @@
-package de.rumpold.xplanedb.parser;
+package de.rumpold.xplanedb.parser.nav;
 
 import de.rumpold.xplanedb.model.NavEntry;
 import de.rumpold.xplanedb.model.NavEntry.NavEntryType;
-import de.rumpold.xplanedb.model.NdbEntry;
 import de.rumpold.xplanedb.parser.exceptions.InvalidHeaderException;
 import de.rumpold.xplanedb.parser.exceptions.ParseException;
 import de.rumpold.xplanedb.parser.exceptions.PrematureEofException;
@@ -18,6 +17,15 @@ public class NavDbParser {
     private static final String NAV_DB_FOOTER = "99";
 
     private final Map<NavEntryType, NavEntryParser> parsers = new TreeMap<>();
+    private final boolean continueOnError;
+
+    public NavDbParser(boolean continueOnError) {
+        this.continueOnError = continueOnError;
+    }
+
+    public NavDbParser() {
+        continueOnError = false;
+    }
 
     private void registerParser(NavEntryParser parser) {
         for (NavEntryType acceptedType : parser.getAcceptedTypes()) {
@@ -64,15 +72,14 @@ public class NavDbParser {
                     final NavEntryParser parser = parsers.get(type);
                     if (parser != null) {
                         final NavEntry entry = parser.parseLine(line);
-
-                        if (entry != null) {
-                            result.add(entry);
-                        }
+                        result.add(entry);
                     } else {
 //                        System.err.println("No parser for entry type " + type);
                     }
                 } catch (NoSuchElementException e) {
-                    throw new ParseException("Unexpected end of line while reading navigation database: " + line, e);
+                    handleException(new ParseException("Unexpected end of line while reading navigation database: " + line, e));
+                } catch (ParseException e) {
+                    handleException(e);
                 }
             }
             return result;
@@ -80,6 +87,14 @@ public class NavDbParser {
             throw new ParseException("Cannot open navigation database for reading: " + navDb, e);
         } catch (IOException e) {
             throw new ParseException("I/O error while reading navigation database: " + navDb, e);
+        }
+    }
+
+    private void handleException(ParseException e) throws ParseException {
+        if (continueOnError) {
+            e.printStackTrace();
+        } else {
+            throw e;
         }
     }
 }

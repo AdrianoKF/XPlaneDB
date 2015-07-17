@@ -1,9 +1,7 @@
-package de.rumpold.xplanedb.parser;
+package de.rumpold.xplanedb.parser.nav;
 
 import de.rumpold.xplanedb.model.LocalizerEntry;
-import de.rumpold.xplanedb.model.NavEntry;
 import de.rumpold.xplanedb.model.NavEntry.NavEntryType;
-import de.rumpold.xplanedb.model.VorEntry;
 import de.rumpold.xplanedb.parser.exceptions.ParseException;
 import org.junit.Before;
 import org.junit.Rule;

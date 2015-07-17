@@ -1,9 +1,7 @@
-package de.rumpold.xplanedb.parser;
+package de.rumpold.xplanedb.parser.nav;
 
 import de.rumpold.xplanedb.model.DmeEntry;
 import de.rumpold.xplanedb.model.IlsDmeEntry;
-import de.rumpold.xplanedb.model.MarkerEntry;
-import de.rumpold.xplanedb.model.NavEntry;
 import de.rumpold.xplanedb.model.NavEntry.NavEntryType;
 import org.junit.Before;
 import org.junit.Rule;

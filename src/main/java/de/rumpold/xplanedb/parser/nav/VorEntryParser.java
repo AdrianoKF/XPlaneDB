@@ -1,18 +1,17 @@
-package de.rumpold.xplanedb.parser;
+package de.rumpold.xplanedb.parser.nav;
 
 import de.rumpold.xplanedb.model.NavEntry;
 import de.rumpold.xplanedb.model.NavEntry.NavEntryType;
-import de.rumpold.xplanedb.model.NdbEntry;
-import de.rumpold.xplanedb.parser.exceptions.InvalidDummyValueException;
+import de.rumpold.xplanedb.model.VorEntry;
 import de.rumpold.xplanedb.parser.exceptions.ParseException;
 
 /**
  * Created by Adriano on 14.07.2015.
  */
-public final class NdbEntryParser extends NavEntryParser {
+public final class VorEntryParser extends NavEntryParser {
     @Override
     public NavEntryType[] getAcceptedTypes() {
-        return new NavEntryType[]{NavEntryType.NDB};
+        return new NavEntryType[]{NavEntryType.VOR};
     }
 
     @Override
@@ -27,13 +26,10 @@ public final class NdbEntryParser extends NavEntryParser {
         final int elevation = Integer.parseInt(fields[3]);
         final int frequency = Integer.parseInt(fields[4]);
         final int range = Integer.parseInt(fields[5]);
-        final double _dummy = Double.parseDouble(fields[6]);
-        if (Math.abs(_dummy) > 1e-6) {
-            throw new InvalidDummyValueException();
-        }
+        final double variation = Double.parseDouble(fields[6]);
         final String identifier = fields[7];
         final String name = concatNameFields(fields);
 
-        return new NdbEntry(latitude, longitude, elevation, frequency, range, identifier, name);
+        return new VorEntry(latitude, longitude, elevation, frequency, range, variation, identifier, name);
     }
 }

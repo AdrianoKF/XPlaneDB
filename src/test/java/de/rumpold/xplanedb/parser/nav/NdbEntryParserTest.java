@@ -1,9 +1,8 @@
-package de.rumpold.xplanedb.parser;
+package de.rumpold.xplanedb.parser.nav;
 
 import de.rumpold.xplanedb.model.GlideslopeEntry;
 import de.rumpold.xplanedb.model.NavEntry;
 import de.rumpold.xplanedb.model.NdbEntry;
-import de.rumpold.xplanedb.parser.exceptions.EntryTooShortException;
 import de.rumpold.xplanedb.parser.exceptions.InvalidDummyValueException;
 import de.rumpold.xplanedb.parser.exceptions.ParseException;
 import org.junit.Before;

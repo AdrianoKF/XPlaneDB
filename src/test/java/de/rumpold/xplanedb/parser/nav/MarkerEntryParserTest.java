@@ -1,8 +1,7 @@
-package de.rumpold.xplanedb.parser;
+package de.rumpold.xplanedb.parser.nav;
 
 import de.rumpold.xplanedb.model.MarkerEntry;
 import de.rumpold.xplanedb.model.MarkerEntry.MarkerType;
-import de.rumpold.xplanedb.model.NavEntry;
 import de.rumpold.xplanedb.model.NavEntry.NavEntryType;
 import de.rumpold.xplanedb.parser.exceptions.InvalidDummyValueException;
 import org.junit.Before;

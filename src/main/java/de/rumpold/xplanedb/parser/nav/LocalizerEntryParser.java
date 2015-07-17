@@ -1,4 +1,4 @@
-package de.rumpold.xplanedb.parser;
+package de.rumpold.xplanedb.parser.nav;
 
 import de.rumpold.xplanedb.model.LocalizerEntry;
 import de.rumpold.xplanedb.model.LocalizerEntry.LocalizerType;
